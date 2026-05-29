@@ -22,13 +22,16 @@
                 <a class="btn btn-danger btn-lg rounded-pill px-4" href="{{ url_for('movies.movies') }}">
                     Ver catálogo
                 </a>
-                <a class="btn btn-outline-light btn-lg rounded-pill px-4" href="{{ url_for('payments.my_movies') }}">
+
+                <a class="btn btn-outline-light btn-lg rounded-pill px-4"
+                    href="{{ url_for('payments.my_movies') }}">
                     Meus filmes
                 </a>
                 {% else %}
                 <a class="btn btn-danger btn-lg rounded-pill px-4" href="{{ url_for('auth.register') }}">
                     Começar agora
                 </a>
+
                 <a class="btn btn-outline-light btn-lg rounded-pill px-4" href="{{ url_for('auth.login') }}">
                     Já tenho conta
                 </a>
@@ -45,13 +48,10 @@
 
                 <div class="hero-poster-grid">
                     {% for movie in destaques[:4] %}
-                    <img 
-                        src="{{ movie.poster_url }}" 
+                    <img
+                        src="{{ movie.poster_url }}"
                         alt="{{ movie.title }}"
-                        loading="lazy"
-                        referrerpolicy="no-referrer"
-                        onerror="this.onerror=null; this.src='https://via.placeholder.com/300x450/111111/ffffff?text=Sem+Imagem';"
-                    >
+                        loading="lazy">
                     {% endfor %}
                 </div>
 
@@ -103,10 +103,13 @@
     <div class="d-flex justify-content-between align-items-center mb-3">
         <div>
             <h2 class="section-title mb-1">Destaques do catálogo</h2>
-            <p class="section-subtitle mb-0">Alguns filmes disponíveis na plataforma.</p>
+            <p class="section-subtitle mb-0">
+                Alguns filmes disponíveis na plataforma.
+            </p>
         </div>
 
-        <a href="{{ url_for('movies.movies') }}" class="btn btn-outline-light rounded-pill px-3">
+        <a href="{{ url_for('movies.movies') }}"
+            class="btn btn-outline-light rounded-pill px-3">
             Ver todos
         </a>
     </div>
@@ -115,24 +118,21 @@
         {% for movie in destaques %}
         <div class="col-6 col-md-4 col-lg-3">
             <div class="movie-card">
+
                 <div class="poster-wrapper">
-                    <img 
-                        src="{{ movie.poster_url }}" 
+                    <img
+                        src="{{ movie.poster_url }}"
                         alt="{{ movie.title }}"
-                        loading="lazy"
-                        referrerpolicy="no-referrer"
-                        onerror="this.onerror=null; this.src='https://via.placeholder.com/300x450/111111/ffffff?text=Sem+Imagem';"
-                    >
+                        loading="lazy">
                 </div>
 
                 <div class="movie-card-body">
                     <h5>{{ movie.title }}</h5>
                     <p>{{ movie.genre }} • {{ movie.year }}</p>
                 </div>
+
             </div>
         </div>
-        {% else %}
-        <p class="text-secondary">Nenhum filme encontrado.</p>
         {% endfor %}
     </div>
 </section>
