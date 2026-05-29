@@ -7,6 +7,7 @@
 <div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center mb-4 gap-3">
     <div>
         <h1 class="fw-bold mb-1">🎬 Catálogo de Filmes</h1>
+
         <p class="text-secondary mb-0">
             Explore, alugue e compre filmes da plataforma.
         </p>
@@ -15,12 +16,17 @@
 
 <div class="card border-0 mb-5">
     <div class="card-body">
+
         <form class="row g-3" method="GET" action="{{ url_for('movies.movies') }}">
 
             <div class="col-lg-6">
                 <label class="form-label">Buscar filme</label>
 
-                <input name="q" value="{{ query or '' }}" class="form-control" placeholder="Digite o nome do filme...">
+                <input
+                    name="q"
+                    value="{{ query }}"
+                    class="form-control"
+                    placeholder="Digite o nome do filme...">
             </div>
 
             <div class="col-lg-4">
@@ -42,6 +48,7 @@
                     Buscar
                 </button>
             </div>
+
         </form>
     </div>
 </div>
@@ -54,13 +61,10 @@
         <div class="movie-card">
 
             <div class="poster-wrapper">
-                <img 
-                    src="{{ movie.poster_url }}" 
+                <img
+                    src="{{ movie.poster_url }}"
                     alt="{{ movie.title }}"
-                    loading="lazy"
-                    referrerpolicy="no-referrer"
-                    onerror="this.onerror=null; this.src='https://via.placeholder.com/300x450/111111/ffffff?text=Sem+Imagem';"
-                >
+                    loading="lazy">
             </div>
 
             <div class="movie-card-body">
@@ -78,6 +82,7 @@
                 </p>
 
                 <div class="d-flex justify-content-between mb-3 small">
+
                     <span class="text-info">
                         Aluguel {{ movie.rent_price|brl }}
                     </span>
@@ -85,6 +90,7 @@
                     <span class="text-success">
                         Compra {{ movie.buy_price|brl }}
                     </span>
+
                 </div>
 
                 <a href="{{ url_for('movies.movie_detail', movie_id=movie.id) }}"
@@ -96,8 +102,6 @@
         </div>
 
     </div>
-    {% else %}
-    <p class="text-secondary">Nenhum filme encontrado.</p>
     {% endfor %}
 
 </div>
