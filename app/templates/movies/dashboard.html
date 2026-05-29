@@ -1,1 +1,157 @@
-{% extends 'base.html' %}{% block content %}<h1>Dashboard</h1><div class="row g-3 mb-4">{% for label,value in [('Filmes',total_movies),('Listas',total_lists),('Assistidos',total_watched),('Pedidos',total_orders)] %}<div class="col-md-3"><div class="card p-3"><span class="text-muted">{{ label }}</span><strong class="fs-2">{{ value }}</strong></div></div>{% endfor %}</div><h2 class="h4">Novidades</h2><div class="row g-3">{% for movie in recent_movies %}<div class="col-md-3"><div class="card h-100"><img class="card-img-top small-poster" src="{{ movie.poster_url }}"><div class="card-body"><h5>{{ movie.title }}</h5><a class="btn btn-sm btn-primary" href="{{ url_for('movies.movie_detail', movie_id=movie.id) }}">Ver</a></div></div></div>{% endfor %}</div>{% endblock %}
+{% extends 'base.html' %}
+
+{% block title %}Dashboard | CrazyCine{% endblock %}
+
+{% block content %}
+
+<section class="dashboard-hero mb-5">
+
+    <div class="row align-items-center g-4">
+
+        <div class="col-lg-8">
+
+            <span class="hero-badge">
+                🎬 Painel do usuário
+            </span>
+
+            <h1 class="hero-title mb-3">
+                Bem-vindo ao seu Dashboard
+            </h1>
+
+            <p class="hero-text">
+                Gerencie seus filmes, acompanhe pedidos, listas personalizadas
+                e controle tudo em uma única plataforma.
+            </p>
+
+        </div>
+
+        <div class="col-lg-4">
+
+            <div class="dashboard-mini-card">
+
+                <h5 class="mb-3">
+                    📈 Resumo rápido
+                </h5>
+
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Filmes disponíveis</span>
+                    <strong>{{ total_movies }}</strong>
+                </div>
+
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Filmes assistidos</span>
+                    <strong>{{ total_watched }}</strong>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <span>Pedidos realizados</span>
+                    <strong>{{ total_orders }}</strong>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section class="mb-5">
+
+    <div class="row g-4">
+
+        {% for label,value,icon,color in [
+        ('Filmes',total_movies,'🎞️','danger'),
+        ('Listas',total_lists,'📚','primary'),
+        ('Assistidos',total_watched,'✅','success'),
+        ('Pedidos',total_orders,'💳','warning')
+        ] %}
+
+        <div class="col-md-6 col-lg-3">
+
+            <div class="stats-card stats-{{ color }}">
+
+                <div class="stats-icon">
+                    {{ icon }}
+                </div>
+
+                <div>
+
+                    <span class="stats-label">
+                        {{ label }}
+                    </span>
+
+                    <h2 class="stats-value">
+                        {{ value }}
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+<section>
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h2 class="fw-bold mb-1">
+                🔥 Novidades
+            </h2>
+
+            <p class="text-secondary mb-0">
+                Filmes adicionados recentemente na plataforma.
+            </p>
+        </div>
+
+        <a href="{{ url_for('movies.movies') }}" class="btn btn-outline-light rounded-pill px-4">
+            Ver catálogo
+        </a>
+
+    </div>
+
+    <div class="row g-4">
+
+        {% for movie in recent_movies %}
+
+        <div class="col-sm-6 col-md-4 col-lg-3">
+
+            <div class="movie-card">
+
+                <div class="poster-wrapper">
+                    <img src="{{ movie.poster_url }}">
+                </div>
+
+                <div class="movie-card-body">
+
+                    <h5>{{ movie.title }}</h5>
+
+                    <p>
+                        {{ movie.genre }} • {{ movie.year }}
+                    </p>
+
+                    <a class="btn btn-danger rounded-pill w-100"
+                        href="{{ url_for('movies.movie_detail', movie_id=movie.id) }}">
+                        Ver detalhes
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+{% endblock %}

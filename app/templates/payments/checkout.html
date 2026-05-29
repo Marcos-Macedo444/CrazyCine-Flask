@@ -1,1 +1,76 @@
-{% extends 'base.html' %}{% block content %}<div class="row justify-content-center"><div class="col-md-7"><div class="card p-4"><h1>Checkout Pix</h1><p><strong>Filme:</strong> {{ movie.title }}</p><p><strong>Operação:</strong> {{ action_type|capitalize }}</p><p><strong>Preço do filme:</strong> {{ price|brl }}</p><p><strong>Valor Pix para teste:</strong> {{ pix_amount|brl }}</p><form method="post"><button class="btn btn-primary w-100 btn-lg">Gerar Pix</button></form></div></div></div>{% endblock %}
+{% extends 'base.html' %}
+
+{% block title %}Checkout Pix | CrazyCine{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+
+    <div class="col-lg-8">
+
+        <div class="checkout-card">
+
+            <div class="row g-4 align-items-center">
+
+                <div class="col-md-4">
+
+                    <img src="{{ movie.poster_url }}" alt="{{ movie.title }}" class="checkout-poster">
+
+                </div>
+
+                <div class="col-md-8">
+
+                    <span class="badge text-bg-danger mb-3">
+                        Pagamento via Pix
+                    </span>
+
+                    <h1 class="fw-bold mb-3">
+                        Checkout
+                    </h1>
+
+                    <div class="checkout-info">
+
+                        <p>
+                            <strong>Filme:</strong>
+                            {{ movie.title }}
+                        </p>
+
+                        <p>
+                            <strong>Operação:</strong>
+                            {{ action_type|capitalize }}
+                        </p>
+
+                        <p>
+                            <strong>Preço do filme:</strong>
+                            {{ price|brl }}
+                        </p>
+
+                        <p>
+                            <strong>Valor Pix para teste:</strong>
+                            {{ pix_amount|brl }}
+                        </p>
+
+                    </div>
+
+                    <div class="alert alert-info mt-3">
+                        O pagamento será processado via Mercado Pago.
+                        Em ambiente de teste, use o botão de simulação após gerar o Pix.
+                    </div>
+
+                    <form method="post" class="mt-4">
+                        <button class="btn btn-danger rounded-pill w-100 btn-lg">
+                            Gerar Pix
+                        </button>
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,1 +1,62 @@
-{% extends 'base.html' %}{% block content %}<div class="row justify-content-center"><div class="col-md-6"><div class="card p-4"><h2>Cadastrar</h2><form method="post">{{ form.hidden_tag() }}<div class="mb-3">{{ form.name.label(class='form-label') }}{{ form.name(class='form-control') }}</div><div class="mb-3">{{ form.email.label(class='form-label') }}{{ form.email(class='form-control') }}</div><div class="mb-3">{{ form.password.label(class='form-label') }}{{ form.password(class='form-control') }}</div><div class="mb-3">{{ form.confirm_password.label(class='form-label') }}{{ form.confirm_password(class='form-control') }}</div>{{ form.submit(class='btn btn-primary w-100') }}</form></div></div></div>{% endblock %}
+{% extends 'base.html' %}
+
+{% block title %}Cadastrar | CrazyCine{% endblock %}
+
+{% block content %}
+
+<div class="auth-wrapper">
+
+    <div class="auth-card auth-card-lg">
+
+        <div class="auth-header text-center mb-4">
+            <div class="auth-icon">🍿</div>
+
+            <h1>Criar conta</h1>
+
+            <p>
+                Cadastre-se para criar listas, marcar assistidos e simular compras por Pix.
+            </p>
+        </div>
+
+        <form method="post">
+
+            {{ form.hidden_tag() }}
+
+            <div class="mb-3">
+                {{ form.name.label(class='form-label') }}
+                {{ form.name(class='form-control', placeholder='Seu nome completo') }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.email.label(class='form-label') }}
+                {{ form.email(class='form-control', placeholder='seuemail@exemplo.com') }}
+            </div>
+
+            <div class="mb-3">
+                {{ form.password.label(class='form-label') }}
+                {{ form.password(class='form-control', placeholder='Crie uma senha') }}
+            </div>
+
+            <div class="mb-4">
+                {{ form.confirm_password.label(class='form-label') }}
+                {{ form.confirm_password(class='form-control', placeholder='Confirme sua senha') }}
+            </div>
+
+            {{ form.submit(class='btn btn-danger rounded-pill w-100 btn-lg') }}
+
+        </form>
+
+        <div class="text-center mt-4">
+            <p class="text-secondary mb-0">
+                Já tem conta?
+                <a href="{{ url_for('auth.login') }}" class="text-danger fw-semibold text-decoration-none">
+                    Entrar
+                </a>
+            </p>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

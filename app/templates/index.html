@@ -1,1 +1,125 @@
-{% extends 'base.html' %}{% block content %}<section class="hero mb-4"><div class="row align-items-center"><div class="col-md-8"><h1 class="display-5 fw-bold">CrazyCine</h1><p class="lead">Visualize, organize, alugue e compre filmes em uma plataforma simples, moderna e centralizada.</p><a class="btn btn-light btn-lg" href="{{ url_for('auth.register') }}">Começar agora</a></div><div class="col-md-4 text-center fs-1">🍿🎥</div></div></section><h2 class="h4 mb-3">Destaques</h2><div class="row g-3">{% for movie in destaques %}<div class="col-md-3"><div class="card h-100"><img src="{{ movie.poster_url }}" class="card-img-top small-poster"><div class="card-body"><h5>{{ movie.title }}</h5><p class="text-muted small">{{ movie.genre }} - {{ movie.year }}</p></div></div></div>{% endfor %}</div>{% endblock %}
+{% extends 'base.html' %}
+
+{% block title %}CrazyCine | Filmes, aluguel e compra{% endblock %}
+
+{% block content %}
+<section class="hero-section">
+    <div class="row align-items-center g-4">
+        <div class="col-lg-7">
+            <span class="hero-badge">🎞️ Plataforma de filmes</span>
+
+            <h1 class="hero-title">
+                Organize, alugue e compre seus filmes em um só lugar.
+            </h1>
+
+            <p class="hero-text">
+                O CrazyCine ajuda você a descobrir filmes, criar listas personalizadas,
+                marcar assistidos e simular compras ou aluguéis via Pix.
+            </p>
+
+            <div class="d-flex flex-wrap gap-3 mt-4">
+                {% if current_user %}
+                <a class="btn btn-danger btn-lg rounded-pill px-4" href="{{ url_for('movies.movies') }}">
+                    Ver catálogo
+                </a>
+                <a class="btn btn-outline-light btn-lg rounded-pill px-4" href="{{ url_for('payments.my_movies') }}">
+                    Meus filmes
+                </a>
+                {% else %}
+                <a class="btn btn-danger btn-lg rounded-pill px-4" href="{{ url_for('auth.register') }}">
+                    Começar agora
+                </a>
+                <a class="btn btn-outline-light btn-lg rounded-pill px-4" href="{{ url_for('auth.login') }}">
+                    Já tenho conta
+                </a>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="col-lg-5">
+            <div class="hero-card">
+                <div class="hero-card-top">
+                    <span>🔥 Em destaque</span>
+                    <span class="badge text-bg-danger">MVP</span>
+                </div>
+
+                <div class="hero-poster-grid">
+                    {% for movie in destaques[:4] %}
+                    <img src="{{ movie.poster_url }}" alt="{{ movie.title }}">
+                    {% endfor %}
+                </div>
+
+                <p class="small text-secondary mt-3 mb-0">
+                    Busque filmes, adicione às listas, compre, alugue e acompanhe tudo pelo painel.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="features-section">
+    <div class="row g-3">
+        <div class="col-md-3">
+            <div class="feature-card">
+                <div class="feature-icon">🔎</div>
+                <h3>Busca rápida</h3>
+                <p>Encontre filmes pelo nome e filtre por gênero.</p>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="feature-card">
+                <div class="feature-icon">📌</div>
+                <h3>Listas</h3>
+                <p>Crie listas como favoritos e assistir depois.</p>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="feature-card">
+                <div class="feature-icon">💳</div>
+                <h3>Pix</h3>
+                <p>Simulação de pagamento via Mercado Pago.</p>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="feature-card">
+                <div class="feature-icon">✅</div>
+                <h3>Controle</h3>
+                <p>Veja filmes comprados, alugados e assistidos.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <h2 class="section-title mb-1">Destaques do catálogo</h2>
+            <p class="section-subtitle mb-0">Alguns filmes disponíveis na plataforma.</p>
+        </div>
+
+        <a href="{{ url_for('movies.movies') }}" class="btn btn-outline-light rounded-pill px-3">
+            Ver todos
+        </a>
+    </div>
+
+    <div class="row g-4">
+        {% for movie in destaques %}
+        <div class="col-6 col-md-4 col-lg-3">
+            <div class="movie-card">
+                <div class="poster-wrapper">
+                    <img src="{{ movie.poster_url }}" alt="{{ movie.title }}">
+                </div>
+
+                <div class="movie-card-body">
+                    <h5>{{ movie.title }}</h5>
+                    <p>{{ movie.genre }} • {{ movie.year }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

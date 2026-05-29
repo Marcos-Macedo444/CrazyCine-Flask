@@ -1,1 +1,112 @@
-{% extends 'base.html' %}{% block content %}<h1>Minhas listas</h1><div class="card p-3 mb-4"><form method="post" action="{{ url_for('lists.create_list') }}" class="row g-2">{{ form.hidden_tag() }}<div class="col-md-9">{{ form.name(class='form-control', placeholder='Ex: Filmes para o fim de semana') }}</div><div class="col-md-3">{{ form.submit(class='btn btn-primary w-100') }}</div></form></div><div class="row g-3">{% for lista in user_lists %}<div class="col-md-4"><div class="card p-3 h-100"><h4>{{ lista.name }}</h4><p class="text-muted">{{ lista.movies|length }} filme(s)</p><div class="d-flex gap-2"><a class="btn btn-outline-light btn-sm" href="{{ url_for('lists.list_detail', list_id=lista.id) }}">Abrir</a><form method="post" action="{{ url_for('lists.delete_list', list_id=lista.id) }}"><button class="btn btn-outline-danger btn-sm">Excluir</button></form></div></div></div>{% endfor %}</div>{% endblock %}
+{% extends 'base.html' %}
+
+{% block title %}Minhas Listas | CrazyCine{% endblock %}
+
+{% block content %}
+
+<div class="d-flex flex-column flex-lg-row justify-content-between align-items-lg-center mb-4 gap-3">
+
+    <div>
+        <h1 class="fw-bold mb-1">📚 Minhas Listas</h1>
+
+        <p class="text-secondary mb-0">
+            Organize seus filmes em listas personalizadas.
+        </p>
+    </div>
+
+</div>
+
+<div class="card border-0 mb-5">
+
+    <div class="card-body">
+
+        <h4 class="mb-3">
+            Criar nova lista
+        </h4>
+
+        <form method="post" action="{{ url_for('lists.create_list') }}" class="row g-3">
+
+            {{ form.hidden_tag() }}
+
+            <div class="col-md-9">
+                {{ form.name(class='form-control', placeholder='Ex: Filmes para o fim de semana') }}
+            </div>
+
+            <div class="col-md-3">
+                {{ form.submit(class='btn btn-danger rounded-pill w-100') }}
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% if user_lists %}
+
+<div class="row g-4">
+
+    {% for lista in user_lists %}
+
+    <div class="col-md-6 col-lg-4">
+
+        <div class="list-card">
+
+            <div class="list-icon">
+                🎞️
+            </div>
+
+            <div class="flex-grow-1">
+
+                <h4>{{ lista.name }}</h4>
+
+                <p>
+                    {{ lista.movies|length }} filme(s)
+                </p>
+
+                <div class="d-flex gap-2 flex-wrap">
+
+                    <a class="btn btn-outline-light btn-sm rounded-pill px-3"
+                        href="{{ url_for('lists.list_detail', list_id=lista.id) }}">
+                        Abrir
+                    </a>
+
+                    <form method="post" action="{{ url_for('lists.delete_list', list_id=lista.id) }}">
+
+                        <button class="btn btn-outline-danger btn-sm rounded-pill px-3">
+                            Excluir
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% else %}
+
+<div class="empty-state">
+
+    <div class="empty-icon">
+        📚
+    </div>
+
+    <h3>Nenhuma lista criada</h3>
+
+    <p>
+        Crie sua primeira lista para organizar seus filmes favoritos.
+    </p>
+
+</div>
+
+{% endif %}
+
+{% endblock %}

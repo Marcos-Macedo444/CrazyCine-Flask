@@ -1,1 +1,93 @@
-{% extends 'base.html' %}{% block content %}<h1>{{ movie_list.name }}</h1><div class="row g-3">{% for movie in movie_list.movies %}<div class="col-md-3"><div class="card h-100"><img src="{{ movie.poster_url }}" class="card-img-top small-poster"><div class="card-body"><h5>{{ movie.title }}</h5><a href="{{ url_for('movies.movie_detail', movie_id=movie.id) }}" class="btn btn-sm btn-primary">Ver</a><form method="post" action="{{ url_for('lists.remove_from_list', list_id=movie_list.id, movie_id=movie.id) }}" class="mt-2"><button class="btn btn-sm btn-outline-danger">Remover</button></form></div></div></div>{% else %}<p>Lista vazia.</p>{% endfor %}</div>{% endblock %}
+{% extends 'base.html' %}
+
+{% block title %}{{ movie_list.name }} | CrazyCine{% endblock %}
+
+{% block content %}
+
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-3">
+
+    <div>
+        <h1 class="fw-bold mb-1">📌 {{ movie_list.name }}</h1>
+
+        <p class="text-secondary mb-0">
+            {{ movie_list.movies|length }} filme(s) nesta lista.
+        </p>
+    </div>
+
+    <a href="{{ url_for('lists.lists') }}" class="btn btn-outline-light rounded-pill px-4">
+        Voltar para listas
+    </a>
+
+</div>
+
+{% if movie_list.movies %}
+
+<div class="row g-4">
+
+    {% for movie in movie_list.movies %}
+
+    <div class="col-sm-6 col-md-4 col-lg-3">
+
+        <div class="movie-card">
+
+            <div class="poster-wrapper">
+                <img src="{{ movie.poster_url }}" alt="{{ movie.title }}">
+            </div>
+
+            <div class="movie-card-body">
+
+                <h5>{{ movie.title }}</h5>
+
+                <p>
+                    {{ movie.genre }} • {{ movie.year }}
+                </p>
+
+                <div class="d-grid gap-2">
+
+                    <a href="{{ url_for('movies.movie_detail', movie_id=movie.id) }}"
+                        class="btn btn-danger rounded-pill">
+                        Ver detalhes
+                    </a>
+
+                    <form method="post"
+                        action="{{ url_for('lists.remove_from_list', list_id=movie_list.id, movie_id=movie.id) }}">
+                        <button class="btn btn-outline-danger rounded-pill w-100">
+                            Remover da lista
+                        </button>
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% else %}
+
+<div class="empty-state">
+
+    <div class="empty-icon">
+        📭
+    </div>
+
+    <h3>Lista vazia</h3>
+
+    <p>
+        Adicione filmes a esta lista a partir do catálogo.
+    </p>
+
+    <a href="{{ url_for('movies.movies') }}" class="btn btn-danger rounded-pill px-4">
+        Explorar filmes
+    </a>
+
+</div>
+
+{% endif %}
+
+{% endblock %}
