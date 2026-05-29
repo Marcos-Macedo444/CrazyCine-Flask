@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: crazycine
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn run:app
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: USE_DEMO_PIX_VALUE
+        value: true
+      - key: ENABLE_TEST_PAYMENT_SIMULATION
+        value: true
